@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Create Survey</h2>
+<form method="post" class="survey-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Survey</button>
+</form>
+<br>
+{% if survey %}
+<form action="{% url 'take_survey' survey.id %}" method="get">
+    <button type="submit">Пройти опрос</button>
+</form>
+{% endif %}
+{% endblock %}

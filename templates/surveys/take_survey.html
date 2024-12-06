@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Take Survey</title>
+</head>
+<body>
+    <h1>{{ survey.title }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% for question in survey.question_set.all %}
+            <h2>{{ question.text }}</h2>
+            {% for choice in question.choice_set.all %}
+                <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}"> {{ choice.text }}<br>
+            {% endfor %}
+        {% endfor %}
+        <br>
+        <button type="submit">Отправить ответы</button>
+    </form>
+</body>
+</html>

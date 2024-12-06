@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ survey.title }} Results</h2>
+{% for question, answers in results.items %}
+    <h3>{{ question.text }}</h3>
+    <ul>
+        {% for answer in answers %}
+            <li>{{ answer }}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+{% endblock %}

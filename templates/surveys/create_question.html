@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Create Question for Survey: {{ survey.title }}</h2>
+<form method="post" class="question-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Question</button>
+</form>
+<br>
+
+{% endblock %}

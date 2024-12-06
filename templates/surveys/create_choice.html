@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Create Choice for Question: {{ question.text }}</h2>
+<form method="post" class="choice-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Choice</button>
+</form>
+<br>
+<a href="{% url 'create_question' survey.id %}">Закончить добавлять выборы</a>
+<br>
+<a href="{% url 'finish_survey_creation' survey.id %}">Закончить создание опроса</a>
+{% endblock %}

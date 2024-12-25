@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Результаты опроса{% endblock %}
+
+{% block content %}
+    <h1>Результаты опроса: {{ survey.title }}</h1>
+    {% for question, choices in results.items %}
+        <h3>{{ question }}</h3>
+        <ul>
+            {% for choice, count in choices.items %}
+                <li>{{ choice }}: {{ count }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}

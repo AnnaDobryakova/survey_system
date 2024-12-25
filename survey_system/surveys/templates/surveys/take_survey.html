@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Пройти опрос{% endblock %}
+
+{% block content %}
+    <h1>Пройти опрос: {{ survey.title }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% for question in survey.question_set.all %}
+            <h3>{{ question.text }}</h3>
+            {% for choice in question.choice_set.all %}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="choice_{{ choice.id }}" value="{{ choice.id }}">
+                    <label class="form-check-label" for="choice_{{ choice.id }}">
+                        {{ choice.text }}
+                    </label>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <button type="submit" class="btn btn-primary mt-3">Отправить</button>
+    </form>
+{% endblock %}

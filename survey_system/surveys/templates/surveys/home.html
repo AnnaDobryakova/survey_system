@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <h1>Главная страница</h1>
+    <a href="{% url 'create_survey' %}" class="btn btn-primary mb-3">Создать новый опрос</a>
+    <h2>Отредактировать старый опрос</h2>
+    <ul class="list-group">
+        {% for survey in surveys %}
+            <li class="list-group-item"><a href="{% url 'edit_survey' survey_id=survey.id %}">{{ survey.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <h2>Пройти опрос</h2>
+    <ul class="list-group">
+        {% for survey in surveys %}
+            <li class="list-group-item"><a href="{% url 'take_survey' survey_id=survey.id %}">{{ survey.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <h2>Результаты опроса</h2>
+    <ul class="list-group">
+        {% for survey in surveys %}
+            <li class="list-group-item"><a href="{% url 'survey_results' survey_id=survey.id %}">{{ survey.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_comment' %}" class="btn btn-secondary mt-3">Добавить комментарий</a>
+
+    <h2>Комментарии</h2>
+    <ul class="list-group">
+        {% for comment in comments %}
+            <li class="list-group-item">{{ comment.user.username }} ({{ comment.created_at }}): {{ comment.text }}</li>
+        {% empty %}
+            <li class="list-group-item">Нет комментариев.</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" action="{% url 'clear_lists' %}" class="mt-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Очистить списки</button>
+    </form>
+{% endblock %}

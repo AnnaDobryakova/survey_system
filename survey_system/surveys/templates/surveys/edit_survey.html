@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактировать опрос{% endblock %}
+
+{% block content %}
+    <h1>Редактировать опрос</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+    <h2>Добавить вопросы</h2>
+    <form method="post" action="{% url 'add_question' survey_id=survey.id %}">
+        {% csrf_token %}
+        {{ question_form.as_p }}
+        <button type="submit" class="btn btn-primary">Добавить вопрос</button>
+    </form>
+    <h2>Вопросы и варианты ответов</h2>
+    {% for question in survey.question_set.all %}
+        <h3>{{ question.text }}</h3>
+        <ul>
+            {% for choice in question.choice_set.all %}
+                <li>{{ choice.text }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'add_choice' question_id=question.id %}" class="btn btn-primary">Добавить вариант ответа</a>
+    {% endfor %}
+    <a href="{% url 'take_survey' survey_id=survey.id %}" class="btn btn-primary">Пройти опрос</a>
+    <a href="{% url 'survey_results' survey_id=survey.id %}" class="btn btn-primary">Посмотреть результаты</a>
+{% endblock %}
